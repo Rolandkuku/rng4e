@@ -12,7 +12,8 @@
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "react": "16.8.6",
-    "react-native": "0.60.4"
+    "react-native": "0.60.4",
+    "react-native-fast-image": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

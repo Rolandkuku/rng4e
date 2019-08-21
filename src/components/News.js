@@ -1,6 +1,7 @@
 // @flow
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import FastImage from "react-native-fast-image";
 import { List } from "immutable";
 import { Text, View, StyleSheet, SectionList } from "react-native";
 
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
 async function fetch(setLoading, setData) {
   setLoading(true);
   const news = await fetchNews();
+  console.log(news);
   const groupedNews = List(news)
     .groupBy(item =>
       item.date
@@ -59,8 +61,20 @@ function News(): React$Element<typeof View> {
           renderSectionHeader={({ section: { title } }) => (
             <Text style={{ fontWeight: "bold" }}>{title}</Text>
           )}
-          renderItem={({ item, index, section }) => (
+          renderItem={({
+            item,
+            index,
+            section
+          }: {
+            item: Post,
+            index: number,
+            section: *
+          }) => (
             <View key={index}>
+              <FastImage
+                style={{ width: 100, height: 100 }}
+                source={{ uri: item.thumbnail_images.full.url }}
+              />
               <Text>{item.title}</Text>
             </View>
           )}
