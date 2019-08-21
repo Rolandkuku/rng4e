@@ -1,10 +1,11 @@
 // @flow
 
 import React from "react";
-import { News } from "./src/components/News";
+import { createAppContainer } from "react-navigation";
+import { AppNavigator } from "./src";
 
-const App = () => {
-  return <News />;
-};
+const AppContainer = createAppContainer(AppNavigator);
 
-export default App;
+export default function() {
+  return <AppContainer />;
+}

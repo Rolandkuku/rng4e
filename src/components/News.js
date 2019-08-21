@@ -3,7 +3,13 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import FastImage from "react-native-fast-image";
 import { List } from "immutable";
-import { Text, View, StyleSheet, SectionList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  SectionList,
+  TouchableOpacity
+} from "react-native";
 
 import { fetchNews } from "../services";
 import type { Post } from "../types";
@@ -34,7 +40,7 @@ async function fetch(setLoading, setData) {
   setLoading(false);
 }
 
-function News(): React$Element<typeof View> {
+function News({ navigation }): React$Element<typeof View> {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   /**
@@ -70,13 +76,20 @@ function News(): React$Element<typeof View> {
             index: number,
             section: *
           }) => (
-            <View key={index}>
-              <FastImage
-                style={{ width: 100, height: 100 }}
-                source={{ uri: item.thumbnail_images.full.url }}
-              />
-              <Text>{item.title}</Text>
-            </View>
+            <TouchableOpacity
+              key={index}
+              onPress={() =>
+                navigation.navigate("NewsDetails", { details: item })
+              }
+            >
+              <View>
+                <FastImage
+                  style={{ width: 100, height: 100 }}
+                  source={{ uri: item.thumbnail_images.full.url }}
+                />
+                <Text>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
           )}
         />
       )}
