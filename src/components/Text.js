@@ -1,7 +1,13 @@
 import React from "react";
 import { Text as RNText, StyleSheet } from "react-native";
 
-import { TEXT_REGULAR, TEXT_LARGE, TEXT_XLARGE, TEXT_SMALL } from "../styles";
+import {
+  TEXT_REGULAR,
+  TEXT_LARGE,
+  TEXT_XLARGE,
+  TEXT_SMALL,
+  TEXT_XSMALL
+} from "../styles";
 
 const styles = StyleSheet.create({
   regular: {
@@ -11,17 +17,28 @@ const styles = StyleSheet.create({
     fontSize: TEXT_XLARGE
   },
   h2: {
-    fontSize: TEXT_LARGE
+    fontSize: TEXT_LARGE,
+    fontWeight: "bold"
+  },
+  h3: {
+    fontSize: TEXT_REGULAR,
+    fontWeight: "bold"
   }
 });
 
-function Text({ style, children, small, ...props }) {
+function Text({ style, children, small, xsmall, ...props }) {
   this.defaultProps = {
-    small: false
+    small: false,
+    xsmall: false
   };
   return (
     <RNText
-      style={[styles.regular, small ? { fontSize: TEXT_SMALL } : null, style]}
+      style={[
+        styles.regular,
+        small ? { fontSize: TEXT_SMALL } : null,
+        xsmall ? { fontSize: TEXT_XSMALL } : null,
+        style
+      ]}
       {...props}
     >
       {children}
@@ -31,7 +48,7 @@ function Text({ style, children, small, ...props }) {
 
 function H1({ style, children, ...props }) {
   return (
-    <RNText style={[styles.regular, style]} {...props}>
+    <RNText style={[styles.h1, style]} {...props}>
       {children}
     </RNText>
   );
@@ -39,10 +56,18 @@ function H1({ style, children, ...props }) {
 
 function H2({ style, children, ...props }) {
   return (
-    <RNText style={[styles.regular, style]} {...props}>
+    <RNText style={[styles.h2, style]} {...props}>
       {children}
     </RNText>
   );
 }
 
-export { Text, H1, H2 };
+function H3({ style, children, ...props }) {
+  return (
+    <RNText style={[styles.h3, style]} {...props}>
+      {children}
+    </RNText>
+  );
+}
+
+export { Text, H1, H2, H3 };

@@ -1,17 +1,38 @@
 // @flow
 import React, { useState, useEffect } from "react";
 import FastImage from "react-native-fast-image";
-import { View, StyleSheet, SectionList, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SectionList,
+  ScrollView,
+  RefreshControl,
+  TouchableNativeFeedback
+} from "react-native";
+import { decode } from "he";
+import {
+  Placeholder,
+  PlaceholderMedia,
+  PlaceholderLine,
+  Fade
+} from "rn-placeholder";
 
 import { fetchNews, fetchArticles } from "../services";
 import { parseDataForSectionList } from "../utils";
-import { BASE_MARGIN, SMALL_MARGIN } from "../styles";
-import { Badge, Text, H2 } from ".";
+import {
+  BASE_MARGIN,
+  SMALL_MARGIN,
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+  COLOR_BLACK
+} from "../styles";
+import { Badge, Text, H3 } from ".";
 import type { Post } from "../types";
 
 const styles = StyleSheet.create({
   container: {
-    padding: BASE_MARGIN
+    padding: BASE_MARGIN,
+    color: COLOR_BLACK
   },
   sectionTitle: {
     fontWeight: "bold"
@@ -22,16 +43,30 @@ const styles = StyleSheet.create({
   },
   postLine: {
     flexDirection: "row",
-    margin: BASE_MARGIN
+    padding: BASE_MARGIN
   },
   titleContainer: {
     marginLeft: BASE_MARGIN,
     flex: 1
   },
+  postLineOdd: {
+    backgroundColor: COLOR_PRIMARY
+  },
+  postTextOdd: {
+    color: COLOR_WHITE
+  },
   badge: {
     position: "absolute",
     top: SMALL_MARGIN,
     left: SMALL_MARGIN
+  },
+  placeholder: {
+    padding: BASE_MARGIN
+  },
+  placeholderMedia: {
+    width: 130,
+    height: 100,
+    marginRight: BASE_MARGIN
   }
 });
 
@@ -41,6 +76,28 @@ async function fetch(setLoading, setData, isNews) {
   setData(parseDataForSectionList(news));
   setLoading(false);
 }
+
+const getOddTextColor = index => (index % 2 !== 0 ? styles.postTextOdd : null);
+
+const PostLinePlaceholder = () => {
+  const placeholders = [];
+  for (let i = 0; i <= 20; i++) {
+    placeholders.push(
+      <Placeholder
+        key={i}
+        style={styles.placeholder}
+        Animation={Fade}
+        Left={() => <PlaceholderMedia style={styles.placeholderMedia} />}
+      >
+        <PlaceholderLine width={30} />
+        <PlaceholderLine />
+        <PlaceholderLine />
+        <PlaceholderLine width={50} />
+      </Placeholder>
+    );
+  }
+  return placeholders;
+};
 
 function PostList({
   onPostPress,
@@ -53,6 +110,7 @@ function PostList({
     isNews: false
   };
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([]);
   /**
    * Hook effect that fetches news upon mount.
@@ -65,15 +123,25 @@ function PostList({
     },
     [data, isNews]
   );
+
+  function onRefresh() {
+    fetch(setRefreshing, setData, isNews);
+  }
   /**
    * Main render.
    */
   return (
-    <View style={styles.container}>
+    <View>
       {loading ? (
-        <Text>Loading</Text>
+        <ScrollView style={styles.container}>
+          <PostLinePlaceholder />
+        </ScrollView>
       ) : (
         <SectionList
+          style={styles.container}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           sections={data}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.sectionTitle}>{title}</Text>
@@ -87,8 +155,16 @@ function PostList({
             index: number,
             section: *
           }) => (
-            <TouchableOpacity key={index} onPress={() => onPostPress(item)}>
-              <View style={styles.postLine}>
+            <TouchableNativeFeedback
+              key={index}
+              onPress={() => onPostPress(item)}
+            >
+              <View
+                style={[
+                  styles.postLine,
+                  index % 2 !== 0 ? styles.postLineOdd : null
+                ]}
+              >
                 <View>
                   <FastImage
                     style={styles.thumbnail}
@@ -97,15 +173,19 @@ function PostList({
                   />
                   <Badge style={styles.badge}>{item.categories[0].title}</Badge>
                 </View>
-                <View style={styles.titleContainer}>
-                  <Text>{item.date}</Text>
-                  <Text numberOfLines={3}>{decodeURI(item.title)}</Text>
-                  <Text numberOfLines={2}>
-                    {JSON.stringify(item.excerpt.replace("<p>", ""))}
+                <View style={[styles.titleContainer]}>
+                  <Text small style={[getOddTextColor(index)]}>
+                    {item.date}
+                  </Text>
+                  <H3 style={[getOddTextColor(index)]} numberOfLines={3}>
+                    {decode(item.title)}
+                  </H3>
+                  <Text style={[getOddTextColor(index)]} numberOfLines={2}>
+                    {decode(item.excerpt.replace("<p>", ""))}
                   </Text>
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableNativeFeedback>
           )}
         />
       )}
