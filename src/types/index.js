@@ -33,6 +33,7 @@ export type Post = {
   },
   categories: Array<Category>,
   content: string,
+  excerpt: string,
   date: string,
   modified: string,
   id: number,

@@ -1,17 +1,12 @@
 // @flow
 import React, { useState, useEffect } from "react";
 import FastImage from "react-native-fast-image";
-import {
-  Text,
-  View,
-  StyleSheet,
-  SectionList,
-  TouchableOpacity
-} from "react-native";
+import { View, StyleSheet, SectionList, TouchableOpacity } from "react-native";
 
 import { fetchNews, fetchArticles } from "../services";
 import { parseDataForSectionList } from "../utils";
-import { BASE_MARGIN } from "../styles";
+import { BASE_MARGIN, SMALL_MARGIN } from "../styles";
+import { Badge, Text, H2 } from ".";
 import type { Post } from "../types";
 
 const styles = StyleSheet.create({
@@ -19,11 +14,24 @@ const styles = StyleSheet.create({
     padding: BASE_MARGIN
   },
   sectionTitle: {
-    fontWeight: "900"
+    fontWeight: "bold"
   },
   thumbnail: {
-    width: 100,
+    width: 130,
     height: 100
+  },
+  postLine: {
+    flexDirection: "row",
+    margin: BASE_MARGIN
+  },
+  titleContainer: {
+    marginLeft: BASE_MARGIN,
+    flex: 1
+  },
+  badge: {
+    position: "absolute",
+    top: SMALL_MARGIN,
+    left: SMALL_MARGIN
   }
 });
 
@@ -55,7 +63,7 @@ function PostList({
         fetch(setLoading, setData, isNews);
       }
     },
-    [data]
+    [data, isNews]
   );
   /**
    * Main render.
@@ -80,13 +88,22 @@ function PostList({
             section: *
           }) => (
             <TouchableOpacity key={index} onPress={() => onPostPress(item)}>
-              <View>
-                <FastImage
-                  style={styles.thumbnail}
-                  resizeMode="contain"
-                  source={{ uri: item.thumbnail_images.full.url }}
-                />
-                <Text>{item.title}</Text>
+              <View style={styles.postLine}>
+                <View>
+                  <FastImage
+                    style={styles.thumbnail}
+                    resizeMode="cover"
+                    source={{ uri: item.thumbnail_images.full.url }}
+                  />
+                  <Badge style={styles.badge}>{item.categories[0].title}</Badge>
+                </View>
+                <View style={styles.titleContainer}>
+                  <Text>{item.date}</Text>
+                  <Text numberOfLines={3}>{decodeURI(item.title)}</Text>
+                  <Text numberOfLines={2}>
+                    {JSON.stringify(item.excerpt.replace("<p>", ""))}
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
           )}
