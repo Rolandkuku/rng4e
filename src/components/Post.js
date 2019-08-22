@@ -1,28 +1,18 @@
+// @flow
 import React, { useState } from "react";
 import { ScrollView, Text, View, PixelRatio } from "react-native";
 import { WebView } from "react-native-webview";
 import FastImage from "react-native-fast-image";
-import type { Post } from "../types";
 
-const document = content => `
-  <html>
-    <head>
-    <div style="font-size:40px;" id="height-calculator">
-      ${content}
-    </div>
-    <script>
-      (function() {
-        const calculator = document.getElementById("height-calculator");
-        window.ReactNativeWebView.postMessage(calculator.clientHeight);
-      })();
-    </script>
-  </html>
-`;
+import { htmlDocument } from "../utils";
+import type { Post as PostType } from "../types";
 
-function NewsDetails({ navigation }) {
+function Post({ post, isNews }: { post: PostType, isNews: boolean }) {
+  this.defaultProps = {
+    isNews: false
+  };
   const [webViewHeight, setWebViewHeight] = useState(0);
-  const details: Post = navigation.getParam("details", {});
-  if (!details.id) {
+  if (!post.id) {
     return (
       <View>
         <Text>Ooooops</Text>
@@ -32,17 +22,16 @@ function NewsDetails({ navigation }) {
   return (
     <ScrollView>
       <FastImage
-        source={{ uri: details.thumbnail_images.full.url }}
+        source={{ uri: post.thumbnail_images.full.url }}
         resizeMode="contain"
         style={{ minHeight: 200, width: "100%" }}
       />
       <View style={{ flex: 1 }}>
         <WebView
           style={{ margin: 20, fontSize: 40, height: webViewHeight }}
-          source={{ html: document(details.content) }}
+          source={{ html: htmlDocument(post.content) }}
           scrollEnabled={false}
           onMessage={e => {
-            e.persist();
             setWebViewHeight(Number(e.nativeEvent.data / PixelRatio.get()));
           }}
         />
@@ -51,4 +40,4 @@ function NewsDetails({ navigation }) {
   );
 }
 
-export { NewsDetails };
+export { Post };

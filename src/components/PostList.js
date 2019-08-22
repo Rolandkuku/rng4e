@@ -1,8 +1,6 @@
 // @flow
 import React, { useState, useEffect } from "react";
-import moment from "moment";
 import FastImage from "react-native-fast-image";
-import { List } from "immutable";
 import {
   Text,
   View,
@@ -11,36 +9,41 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import { fetchNews } from "../services";
+import { fetchNews, fetchArticles } from "../services";
+import { parseDataForSectionList } from "../utils";
+import { BASE_MARGIN } from "../styles";
 import type { Post } from "../types";
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: BASE_MARGIN
+  },
+  sectionTitle: {
+    fontWeight: "900"
+  },
+  thumbnail: {
+    width: 100,
+    height: 100
   }
 });
 
-async function fetch(setLoading, setData) {
+async function fetch(setLoading, setData, isNews) {
   setLoading(true);
-  const news = await fetchNews();
-  console.log(news);
-  const groupedNews = List(news)
-    .groupBy(item =>
-      item.date
-        .split(" ")
-        .slice(0, 4)
-        .join(" ")
-    )
-    .toArray()
-    .map(([title, list]) => ({
-      title,
-      data: list.toArray()
-    }));
-  setData(groupedNews);
+  const news = isNews ? await fetchNews() : await fetchArticles();
+  setData(parseDataForSectionList(news));
   setLoading(false);
 }
 
-function News({ navigation }): React$Element<typeof View> {
+function PostList({
+  onPostPress,
+  isNews
+}: {
+  onPostPress: Post => any,
+  isNews: boolean
+}): React$Element<typeof View> {
+  this.defaultProps = {
+    isNews: false
+  };
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   /**
@@ -49,7 +52,7 @@ function News({ navigation }): React$Element<typeof View> {
   useEffect(
     function() {
       if (!data.length) {
-        fetch(setLoading, setData);
+        fetch(setLoading, setData, isNews);
       }
     },
     [data]
@@ -65,7 +68,7 @@ function News({ navigation }): React$Element<typeof View> {
         <SectionList
           sections={data}
           renderSectionHeader={({ section: { title } }) => (
-            <Text style={{ fontWeight: "bold" }}>{title}</Text>
+            <Text style={styles.sectionTitle}>{title}</Text>
           )}
           renderItem={({
             item,
@@ -76,15 +79,11 @@ function News({ navigation }): React$Element<typeof View> {
             index: number,
             section: *
           }) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() =>
-                navigation.navigate("NewsDetails", { details: item })
-              }
-            >
+            <TouchableOpacity key={index} onPress={() => onPostPress(item)}>
               <View>
                 <FastImage
-                  style={{ width: 100, height: 100 }}
+                  style={styles.thumbnail}
+                  resizeMode="contain"
                   source={{ uri: item.thumbnail_images.full.url }}
                 />
                 <Text>{item.title}</Text>
@@ -97,4 +96,4 @@ function News({ navigation }): React$Element<typeof View> {
   );
 }
 
-export { News };
+export { PostList };

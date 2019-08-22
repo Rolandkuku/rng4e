@@ -46,3 +46,11 @@ export type Post = {
 };
 
 export type Posts = Array<Post>;
+
+export type Navigation = {
+  navigate: (screen: string, param: any) => void,
+  getParam: (param: string) => any,
+  state: {
+    routeName: string
+  }
+};
