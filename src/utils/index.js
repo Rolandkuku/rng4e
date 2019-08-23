@@ -6,13 +6,14 @@ export const htmlDocument = content => `
     <div style="font-size:${15 * PixelRatio.get()};" id="content">
       ${content}
     </div>
-    <script>
-      (function() {
-        const $content = document.getElementById("content");
-        window.ReactNativeWebView.postMessage($content.clientHeight);
-      })();
-    </script>
   </html>
+`;
+
+export const getDocumentHeighJS = `
+(function() {
+  const $content = document.getElementById("content");
+  window.ReactNativeWebView.postMessage($content.clientHeight);
+})();
 `;
 
 export * from "./parsers";
