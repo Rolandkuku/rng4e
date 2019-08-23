@@ -17,3 +17,4 @@ export const getDocumentHeighJS = `
 `;
 
 export * from "./parsers";
+export * from "./constants";

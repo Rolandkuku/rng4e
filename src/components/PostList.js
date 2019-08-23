@@ -173,15 +173,17 @@ function PostList({
    */
   useEffect(
     function() {
-      if (!data.length) {
+      if (!data.length && !loading && !refreshing) {
         fetch(setLoading, setData, setError, isNews);
       }
     },
-    [data, isNews]
+    [data, isNews, loading, refreshing]
   );
 
   function onRefresh() {
-    fetch(setRefreshing, setData, setError, isNews);
+    if (!refreshing && !loading) {
+      fetch(setRefreshing, setData, setError, isNews);
+    }
   }
   /**
    * Main render.
@@ -193,7 +195,7 @@ function PostList({
         <ScrollView
           style={styles.container}
           refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
           <PostLinePlaceholder />

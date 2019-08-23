@@ -8,3 +8,4 @@ export { ForumScreen } from "./ForumScreen";
 export { CalendarScreen } from "./CalendarScreen";
 export { Badge } from "./Badge";
 export { Text, H1, H2, H3 } from "./Text";
+export { TOSLink } from "./TOSLink";

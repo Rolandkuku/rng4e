@@ -11,7 +11,8 @@ import {
   ArticleDetailsScreen,
   ArticlesScreen,
   ForumScreen,
-  CalendarScreen
+  CalendarScreen,
+  TOSLink
 } from "../components";
 import {
   COLOR_PRIMARY,
@@ -19,7 +20,8 @@ import {
   COLOR_SECONDARY,
   COLOR_GREY,
   COLOR_BLACK,
-  COLOR_IRON
+  COLOR_IRON,
+  BASE_MARGIN
 } from "../styles";
 import type { Post } from "../types";
 
@@ -52,7 +54,8 @@ const getNavigationOptions = color => {
       headerTitleStyle: {
         color: COLOR_WHITE
       },
-      headerTintColor: COLOR_WHITE
+      headerTintColor: COLOR_WHITE,
+      headerRight: <TOSLink />
     };
   };
 };

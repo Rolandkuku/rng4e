@@ -27,7 +27,7 @@ function Post({ post, isNews }: { post: PostType, isNews: boolean }) {
   this.defaultProps = {
     isNews: false
   };
-  const [webViewHeight, setWebViewHeight] = useState(0);
+  const [webViewHeight, setWebViewHeight] = useState(1000);
 
   if (!post.id) {
     return (
