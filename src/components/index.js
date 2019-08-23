@@ -4,5 +4,7 @@ export { NewsDetailsScreen } from "./NewsDetailScreen";
 export { NewsScreen } from "./NewsScreen";
 export { ArticlesScreen } from "./ArticlesScreen";
 export { ArticleDetailsScreen } from "./ArticleDetailsScreen";
+export { ForumScreen } from "./ForumScreen";
+export { CalendarScreen } from "./CalendarScreen";
 export { Badge } from "./Badge";
 export { Text, H1, H2, H3 } from "./Text";

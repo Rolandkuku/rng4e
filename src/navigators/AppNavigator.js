@@ -9,13 +9,17 @@ import {
   NewsScreen,
   NewsDetailsScreen,
   ArticleDetailsScreen,
-  ArticlesScreen
+  ArticlesScreen,
+  ForumScreen,
+  CalendarScreen
 } from "../components";
 import {
   COLOR_PRIMARY,
   COLOR_WHITE,
   COLOR_SECONDARY,
-  COLOR_GREY
+  COLOR_GREY,
+  COLOR_BLACK,
+  COLOR_IRON
 } from "../styles";
 import type { Post } from "../types";
 
@@ -25,10 +29,16 @@ const getTitle = routeName => {
       return "Brèves";
     case "Articles":
       return "Articles";
+    case "Forum":
+      return "Forum";
+    case "Calendar":
+      return "Calendrier";
     default:
       return "Girondins4ever";
   }
 };
+
+const tabBarColor = [COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BLACK, COLOR_IRON];
 
 const getNavigationOptions = color => {
   return ({ navigation }) => {
@@ -69,6 +79,20 @@ const ArticlesNavigator = createStackNavigator({
   }
 });
 
+const ForumNavigator = createStackNavigator({
+  Forum: {
+    screen: ForumScreen,
+    navigationOptions: getNavigationOptions(COLOR_BLACK)
+  }
+});
+
+const CalendarNavigator = createStackNavigator({
+  Calendar: {
+    screen: CalendarScreen,
+    navigationOptions: getNavigationOptions(COLOR_IRON)
+  }
+});
+
 const AppNavigator = createBottomTabNavigator(
   {
     News: {
@@ -94,6 +118,30 @@ const AppNavigator = createBottomTabNavigator(
           />
         )
       })
+    },
+    Forum: {
+      screen: ForumNavigator,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <Icon
+            name="rocketchat"
+            size={30}
+            color={focused ? COLOR_WHITE : COLOR_GREY}
+          />
+        )
+      })
+    },
+    Calendar: {
+      screen: CalendarNavigator,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <Icon
+            name="calendar"
+            size={30}
+            color={focused ? COLOR_WHITE : COLOR_GREY}
+          />
+        )
+      })
     }
   },
   {
@@ -106,7 +154,7 @@ const AppNavigator = createBottomTabNavigator(
         <BottomTabBar
           {...props}
           style={{
-            backgroundColor: index ? COLOR_SECONDARY : COLOR_PRIMARY
+            backgroundColor: tabBarColor[index]
           }}
         />
       );
