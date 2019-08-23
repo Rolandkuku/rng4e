@@ -23,6 +23,7 @@ import {
   BASE_MARGIN,
   SMALL_MARGIN,
   COLOR_PRIMARY,
+  COLOR_SECONDARY,
   COLOR_WHITE,
   COLOR_BLACK
 } from "../styles";
@@ -67,13 +68,27 @@ const styles = StyleSheet.create({
     width: 130,
     height: 100,
     marginRight: BASE_MARGIN
+  },
+  errorMessageContainer: {
+    padding: BASE_MARGIN
+  },
+  errorMessageText: {
+    color: COLOR_SECONDARY
   }
 });
 
-async function fetch(setLoading, setData, isNews) {
+const NETWORK_ERROR_TEXT =
+  "Erreur pendant le chargement ☹️. Tape pour réessayer.";
+
+async function fetch(setLoading, setData, setError, isNews) {
   setLoading(true);
-  const data = isNews ? await fetchNews() : await fetchArticles();
-  setData(parseDataForSectionList(data));
+  try {
+    const data = isNews ? await fetchNews() : await fetchArticles();
+    setError(null);
+    setData(parseDataForSectionList(data));
+  } catch (e) {
+    setError(NETWORK_ERROR_TEXT);
+  }
   setLoading(false);
 }
 
@@ -131,6 +146,14 @@ function PostLine({ post, index, onPostPress }) {
   );
 }
 
+const ErrorMessage = ({ children, onPress }) => (
+  <TouchableNativeFeedback onPress={onPress}>
+    <View style={styles.errorMessageContainer}>
+      <Text styles={styles.errorMessageText}>{children}</Text>
+    </View>
+  </TouchableNativeFeedback>
+);
+
 function PostList({
   onPostPress,
   isNews
@@ -143,6 +166,7 @@ function PostList({
   };
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   /**
    * Hook effect that fetches news upon mount.
@@ -150,21 +174,22 @@ function PostList({
   useEffect(
     function() {
       if (!data.length) {
-        fetch(setLoading, setData, isNews);
+        fetch(setLoading, setData, setError, isNews);
       }
     },
     [data, isNews]
   );
 
   function onRefresh() {
-    fetch(setRefreshing, setData, isNews);
+    fetch(setRefreshing, setData, setError, isNews);
   }
   /**
    * Main render.
    */
   return (
     <View>
-      {loading ? (
+      {error ? <ErrorMessage onPress={onRefresh}>{error}</ErrorMessage> : null}
+      {data.length === 0 ? (
         <ScrollView
           style={styles.container}
           refreshControl={
