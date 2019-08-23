@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
 
 async function fetch(setLoading, setData, isNews) {
   setLoading(true);
-  const news = isNews ? await fetchNews() : await fetchArticles();
-  setData(parseDataForSectionList(news));
+  const data = isNews ? await fetchNews() : await fetchArticles();
+  setData(parseDataForSectionList(data));
   setLoading(false);
 }
 
@@ -98,6 +98,38 @@ const PostLinePlaceholder = () => {
   }
   return placeholders;
 };
+
+function PostLine({ post, index, onPostPress }) {
+  return (
+    <TouchableNativeFeedback key={index} onPress={() => onPostPress(post)}>
+      <View
+        style={[styles.postLine, index % 2 !== 0 ? styles.postLineOdd : null]}
+      >
+        <View>
+          <FastImage
+            style={styles.thumbnail}
+            resizeMode="cover"
+            source={{ uri: post.thumbnail_images.full.url }}
+          />
+          {post.categories.length ? (
+            <Badge style={styles.badge}>{post.categories[0].title}</Badge>
+          ) : null}
+        </View>
+        <View style={[styles.titleContainer]}>
+          <Text small style={[getOddTextColor(index)]}>
+            {post.date}
+          </Text>
+          <H3 style={[getOddTextColor(index)]} numberOfLines={3}>
+            {decode(post.title)}
+          </H3>
+          <Text style={[getOddTextColor(index)]} numberOfLines={2}>
+            {decode(post.excerpt.replace("<p>", ""))}
+          </Text>
+        </View>
+      </View>
+    </TouchableNativeFeedback>
+  );
+}
 
 function PostList({
   onPostPress,
@@ -133,7 +165,12 @@ function PostList({
   return (
     <View>
       {loading ? (
-        <ScrollView style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+          }
+        >
           <PostLinePlaceholder />
         </ScrollView>
       ) : (
@@ -155,37 +192,7 @@ function PostList({
             index: number,
             section: *
           }) => (
-            <TouchableNativeFeedback
-              key={index}
-              onPress={() => onPostPress(item)}
-            >
-              <View
-                style={[
-                  styles.postLine,
-                  index % 2 !== 0 ? styles.postLineOdd : null
-                ]}
-              >
-                <View>
-                  <FastImage
-                    style={styles.thumbnail}
-                    resizeMode="cover"
-                    source={{ uri: item.thumbnail_images.full.url }}
-                  />
-                  <Badge style={styles.badge}>{item.categories[0].title}</Badge>
-                </View>
-                <View style={[styles.titleContainer]}>
-                  <Text small style={[getOddTextColor(index)]}>
-                    {item.date}
-                  </Text>
-                  <H3 style={[getOddTextColor(index)]} numberOfLines={3}>
-                    {decode(item.title)}
-                  </H3>
-                  <Text style={[getOddTextColor(index)]} numberOfLines={2}>
-                    {decode(item.excerpt.replace("<p>", ""))}
-                  </Text>
-                </View>
-              </View>
-            </TouchableNativeFeedback>
+            <PostLine post={item} index={index} onPostPress={onPostPress} />
           )}
         />
       )}

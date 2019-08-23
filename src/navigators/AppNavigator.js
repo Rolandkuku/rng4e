@@ -1,15 +1,22 @@
+import React from "react";
 import {
   createStackNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  BottomTabBar
 } from "react-navigation";
-import { StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import {
   NewsScreen,
   NewsDetailsScreen,
   ArticleDetailsScreen,
   ArticlesScreen
 } from "../components";
-import { COLOR_PRIMARY, COLOR_WHITE } from "../styles";
+import {
+  COLOR_PRIMARY,
+  COLOR_WHITE,
+  COLOR_SECONDARY,
+  COLOR_GREY
+} from "../styles";
 import type { Post } from "../types";
 
 const getTitle = routeName => {
@@ -23,43 +30,88 @@ const getTitle = routeName => {
   }
 };
 
-const navigationOptions = ({ navigation }) => {
-  const post: Post = navigation.getParam("post");
-  const { routeName } = navigation.state;
-  return {
-    title: post ? post.title : getTitle(routeName)
+const getNavigationOptions = color => {
+  return ({ navigation }) => {
+    const post: Post = navigation.getParam("post");
+    const { routeName } = navigation.state;
+    return {
+      title: post ? post.title : getTitle(routeName),
+      headerStyle: {
+        backgroundColor: color
+      },
+      headerTitleStyle: {
+        color: COLOR_WHITE
+      },
+      headerTintColor: COLOR_WHITE
+    };
   };
 };
 
-const defaultNavigationOptions = {
-  headerStyle: {
-    backgroundColor: COLOR_PRIMARY
+const NewsNavigator = createStackNavigator({
+  News: {
+    screen: NewsScreen,
+    navigationOptions: getNavigationOptions(COLOR_PRIMARY)
   },
-  headerTitleStyle: {
-    color: COLOR_WHITE
-  },
-  headerTintColor: COLOR_WHITE
-};
-
-const NewsNavigator = createStackNavigator(
-  {
-    News: {
-      screen: NewsScreen,
-      navigationOptions
-    },
-    NewsDetails: { screen: NewsDetailsScreen, navigationOptions }
-  },
-  { defaultNavigationOptions }
-);
+  NewsDetails: {
+    screen: NewsDetailsScreen,
+    navigationOptions: getNavigationOptions(COLOR_PRIMARY)
+  }
+});
 
 const ArticlesNavigator = createStackNavigator({
-  Articles: { screen: ArticlesScreen, navigationOptions },
-  ArticleDetails: { screen: ArticleDetailsScreen, navigationOptions }
+  Articles: {
+    screen: ArticlesScreen,
+    navigationOptions: getNavigationOptions(COLOR_SECONDARY)
+  },
+  ArticleDetails: {
+    screen: ArticleDetailsScreen,
+    navigationOptions: getNavigationOptions(COLOR_SECONDARY)
+  }
 });
 
-const AppNavigator = createBottomTabNavigator({
-  NewsNavigator,
-  ArticlesNavigator
-});
+const AppNavigator = createBottomTabNavigator(
+  {
+    News: {
+      screen: NewsNavigator,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <Icon
+            name="mobile-alt"
+            size={30}
+            color={focused ? COLOR_WHITE : COLOR_GREY}
+          />
+        )
+      })
+    },
+    Articles: {
+      screen: ArticlesNavigator,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <Icon
+            name="newspaper"
+            size={30}
+            color={focused ? COLOR_WHITE : COLOR_GREY}
+          />
+        )
+      })
+    }
+  },
+  {
+    tabBarOptions: {
+      showLabel: false
+    },
+    tabBarComponent: props => {
+      const { index } = props.navigation.state;
+      return (
+        <BottomTabBar
+          {...props}
+          style={{
+            backgroundColor: index ? COLOR_SECONDARY : COLOR_PRIMARY
+          }}
+        />
+      );
+    }
+  }
+);
 
 export { AppNavigator };
