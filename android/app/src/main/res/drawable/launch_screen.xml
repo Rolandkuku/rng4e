@@ -8,6 +8,7 @@
         <bitmap
             android:src="@drawable/splash"
             android:tileMode="disabled"
-            android:gravity="top"/>
+            android:filter="true"
+            android:gravity="fill"/>
     </item>
 </layer-list>
