@@ -20,8 +20,8 @@ import {
 import { fetchNews, fetchArticles } from "../services";
 import { parseDataForSectionList } from "../utils";
 import {
-  BASE_MARGIN,
-  SMALL_MARGIN,
+  MARGIN_BASE,
+  MARGIN_SMALL,
   COLOR_PRIMARY,
   COLOR_SECONDARY,
   COLOR_WHITE,
@@ -32,7 +32,6 @@ import type { Post } from "../types";
 
 const styles = StyleSheet.create({
   container: {
-    padding: BASE_MARGIN,
     color: COLOR_BLACK
   },
   sectionTitle: {
@@ -44,10 +43,10 @@ const styles = StyleSheet.create({
   },
   postLine: {
     flexDirection: "row",
-    padding: BASE_MARGIN
+    padding: MARGIN_BASE
   },
   titleContainer: {
-    marginLeft: BASE_MARGIN,
+    marginLeft: MARGIN_BASE,
     flex: 1
   },
   postLineOdd: {
@@ -58,19 +57,19 @@ const styles = StyleSheet.create({
   },
   badge: {
     position: "absolute",
-    top: SMALL_MARGIN,
-    left: SMALL_MARGIN
+    top: MARGIN_SMALL,
+    left: MARGIN_SMALL
   },
   placeholder: {
-    padding: BASE_MARGIN
+    padding: MARGIN_BASE
   },
   placeholderMedia: {
     width: 130,
     height: 100,
-    marginRight: BASE_MARGIN
+    marginRight: MARGIN_BASE
   },
   errorMessageContainer: {
-    padding: BASE_MARGIN
+    padding: MARGIN_BASE
   },
   errorMessageText: {
     color: COLOR_SECONDARY
@@ -208,7 +207,9 @@ function PostList({
           }
           sections={data}
           renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.sectionTitle}>{title}</Text>
+            <View style={{ padding: MARGIN_BASE }}>
+              <Text style={styles.sectionTitle}>{title}</Text>
+            </View>
           )}
           renderItem={({
             item,

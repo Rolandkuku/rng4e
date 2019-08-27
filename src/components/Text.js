@@ -9,18 +9,26 @@ import {
   TEXT_XSMALL
 } from "../styles";
 
+const baseStyles = {
+  fontFamily: "Roboto"
+};
+
 const styles = StyleSheet.create({
   regular: {
+    ...baseStyles,
     fontSize: TEXT_REGULAR
   },
   h1: {
+    ...baseStyles,
     fontSize: TEXT_XLARGE
   },
   h2: {
+    ...baseStyles,
     fontSize: TEXT_LARGE,
     fontWeight: "bold"
   },
   h3: {
+    ...baseStyles,
     fontSize: TEXT_REGULAR,
     fontWeight: "bold"
   }

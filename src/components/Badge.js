@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import {
-  XSMALL_MARGIN,
+  MARGIN_XSMALL,
   RADIUS_BASE,
   COLOR_WHITE,
   TEXT_XSMALL
@@ -11,7 +11,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "red",
-    padding: XSMALL_MARGIN,
+    padding: MARGIN_XSMALL,
     borderRadius: RADIUS_BASE
   },
   text: {

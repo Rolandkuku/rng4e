@@ -4,11 +4,16 @@
     <item>
         <color android:color="@color/background_material_light"/>
     </item>
-    <item>
+    <item
+        android:height="100dp"
+        android:width="100dp"
+        android:gravity="center"
+        >
         <bitmap
-            android:src="@drawable/splash"
+            android:src="@drawable/logo_g4ever"
             android:tileMode="disabled"
             android:filter="true"
-            android:gravity="fill"/>
+            android:gravity="fill"
+            />
     </item>
 </layer-list>

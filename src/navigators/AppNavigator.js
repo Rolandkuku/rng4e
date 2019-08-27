@@ -20,8 +20,7 @@ import {
   COLOR_SECONDARY,
   COLOR_GREY,
   COLOR_BLACK,
-  COLOR_IRON,
-  BASE_MARGIN
+  COLOR_IRON
 } from "../styles";
 import type { Post } from "../types";
 
@@ -47,7 +46,7 @@ const getNavigationOptions = color => {
     const post: Post = navigation.getParam("post");
     const { routeName } = navigation.state;
     return {
-      title: post ? post.title : getTitle(routeName),
+      title: post ? null : getTitle(routeName),
       headerStyle: {
         backgroundColor: color
       },

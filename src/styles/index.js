@@ -1,7 +1,9 @@
-export const BASE_MARGIN = 8;
-export const SMALL_MARGIN = 4;
-export const XSMALL_MARGIN = 2;
-export const BASE_PADDING = BASE_MARGIN;
+export const MARGIN_BASE = 8;
+export const MARGIN_SMALL = 4;
+export const MARGIN_XSMALL = 2;
+export const MARGIN_LARGE = 16;
+export const MARGIN_XLARGE = 32;
+export const BASE_PADDING = MARGIN_BASE;
 export const TEXT_REGULAR = 14;
 export const TEXT_SMALL = 12;
 export const TEXT_XSMALL = 10;
