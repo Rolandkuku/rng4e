@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#090e14</color>
+    <color name="colorPrimaryDark">#101F45</color>
+    <color name="colorAccent">#6d071a</color>
+    <color name="g4eColor">#101F45</color>
+    <color name="g4eRedColor">#6d071a</color>
+    <color name="g4eGreyColor">#465b65</color>
+    <color name="g4eBlackColor">#090e14</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#888888</color>
+</resources>

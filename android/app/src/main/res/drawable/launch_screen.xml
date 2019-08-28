@@ -2,18 +2,14 @@
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <color android:color="@color/background_material_light"/>
+        <color android:color="@color/white"/>
     </item>
-    <item
-        android:height="100dp"
-        android:width="100dp"
-        android:gravity="center"
-        >
+    <item>
         <bitmap
-            android:src="@drawable/logo_g4ever"
+            android:src="@drawable/splash_img"
             android:tileMode="disabled"
+            android:gravity="center_horizontal|center_vertical"
             android:filter="true"
-            android:gravity="fill"
             />
     </item>
 </layer-list>
