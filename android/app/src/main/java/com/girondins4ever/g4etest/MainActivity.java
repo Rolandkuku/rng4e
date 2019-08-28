@@ -1,4 +1,4 @@
-package com.rng4e;
+package com.girondins4ever.g4etest;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "rng4e";
+        return "girondins4ever.g4etest";
     }
 }

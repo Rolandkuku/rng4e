@@ -1,0 +1,9 @@
+Une nouvelle version de l'application officielle du site Girondins4ever.com débarque sur le Play Store ! Toute l'actualité des Girondins de Bordeaux en un clic ...
+
+Les différentes rubriques que vous trouverez sur votre application :
+- Les articles rédigés par l'équipe du site, et plus particulièrement les avant et après-matchs
+- Les brèves, vous offrant un maximum d'informations sur l'actualité du club
+- L'accès au chat du site
+- Le classement des girondins
+
+Et l'information en temps réel grâce aux notifications !

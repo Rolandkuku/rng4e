@@ -128,11 +128,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rng4e"
+        applicationId "com.girondins4ever.g4etest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 8
+        versionName "3.0"
     }
     splits {
         abi {
@@ -143,6 +143,12 @@ android {
         }
     }
     signingConfigs {
+        release {
+            storeFile file(System.getenv('G4E_KEYSTORE'))
+            storePassword System.getenv('G4E_KEYSTORE_PASSWORD')
+            keyAlias System.getenv('G4E_SIGNIN_KEY')
+            keyPassword System.getenv('G4E_KEYSTORE_PASSWORD')
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -157,7 +163,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

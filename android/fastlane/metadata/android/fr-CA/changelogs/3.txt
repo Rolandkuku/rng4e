@@ -1,0 +1,8 @@
+Nous avons ajouté les fonctionnalités suivantes : 
+
+- Les brèves et articles ne sont téléchargés qu'une fois et sont ensuite accessibles même hors ligne. Le téléchargement à la première ouverture de l'application peut s'avérer un peu long.
+- Vous pouvez maintenant passer d'une brève/un article à l'autre d'un simple swipe !
+- Un bouton est maintenant accessible pour modifier la taille du texte
+- Résolution bug d'affichage
+
+Merci à tous pour vos retours. Cette seconde version est toujours en bêta.
