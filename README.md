@@ -1,8 +1,6 @@
 # This is G4E
 
-This is the third version of the [Girondins4ever](http://www.girondins4ever.com/) android app. It was re-written using [React Native](https://facebook.github.io/react-native/). It allows any Android device owner to keep up with the latest news about the greatest football team of all times: the Girondins de Bordeaux:
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/giE7svTR0Ko" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+This is the third version of the [Girondins4ever](http://www.girondins4ever.com/) android app. It was re-written using [React Native](https://facebook.github.io/react-native/). It allows any Android device owner to keep up with the latest news about the greatest football team of all times: the Girondins de Bordeaux 🔵⚪️
 
 # Setup
 
@@ -22,7 +20,7 @@ You will also need to get the google credentials and the `.keystore` file if you
 There are currently two lanes in our fastfile: `beta` and `release`.
 
 ```
-$ bundle exec fastlane <beta|release>
+$ cd android && bundle exec fastlane <beta|release>
 ```
 
 ## Develop
@@ -38,3 +36,4 @@ Here is a non-exhaustive list of features yet to develop:
 - [ ] Articles and news pagination
 - [ ] Add google analytics
 - [ ] Add firebase
+- [ ] Share news and articles
