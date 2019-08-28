@@ -12,7 +12,7 @@ import FastImage from "react-native-fast-image";
 import { decode } from "he";
 
 import { htmlDocument, getDocumentHeighJS } from "../utils";
-import { H1, Text } from "../components";
+import { H1, H3, Text } from "../components";
 import { MARGIN_BASE, MARGIN_XLARGE, MARGIN_LARGE } from "../styles";
 import type { Post as PostType } from "../types";
 
@@ -51,7 +51,9 @@ function Post({ post, isNews }: { post: PostType, isNews: boolean }) {
     <ScrollView style={styles.container}>
       <View style={styles.titleContainer}>
         <H1 style={styles.title}>{decode(post.title)}</H1>
-        <Text>{post.date}</Text>
+        <Text>
+          Par <H3>{post.author.name}</H3> {post.date}
+        </Text>
       </View>
       <View style={styles.imageContainer}>
         <FastImage
