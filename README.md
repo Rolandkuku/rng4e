@@ -1,6 +1,6 @@
 # This is G4E
 
-This is the third version of the [Girondins4ever](http://www.girondins4ever.com/) android app. It was re-written using [React Native](https://facebook.github.io/react-native/). It allows any Android device owner to keep up with the latest news about the greatest football team of all times: the Girondins de Bordeaux 🔵⚪️
+This is the third version of the [Girondins4ever](http://www.girondins4ever.com/) android app. It was re-written using [React Native](https://facebook.github.io/react-native/). It allows any Android device owner to keep up with the latest news about the greatest football team of all times: the [Girondins de Bordeaux](https://en.wikipedia.org/wiki/FC_Girondins_de_Bordeaux) 🔵⚪️
 
 # Setup
 
@@ -36,4 +36,4 @@ Here is a non-exhaustive list of features yet to develop:
 - [ ] Articles and news pagination
 - [ ] Add google analytics
 - [ ] Add firebase
-- [ ] Share news and articles
+- [x] Share news and articles

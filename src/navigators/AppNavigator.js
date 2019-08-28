@@ -12,7 +12,7 @@ import {
   ArticlesScreen,
   ForumScreen,
   CalendarScreen,
-  TOSLink
+  IconLink
 } from "../components";
 import {
   COLOR_PRIMARY,
@@ -22,6 +22,7 @@ import {
   COLOR_BLACK,
   COLOR_IRON
 } from "../styles";
+import { TOS_URL } from "../utils";
 import type { Post } from "../types";
 
 const getTitle = routeName => {
@@ -54,7 +55,12 @@ const getNavigationOptions = color => {
         color: COLOR_WHITE
       },
       headerTintColor: COLOR_WHITE,
-      headerRight: <TOSLink />
+      headerRight:
+        post && post.url ? (
+          <IconLink type="share" url={post.url} />
+        ) : (
+          <IconLink url={TOS_URL} />
+        )
     };
   };
 };
