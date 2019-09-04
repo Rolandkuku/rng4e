@@ -17,6 +17,12 @@ $ react-native run-android
 We use [Fastlane](https://docs.fastlane.tools/) managed by [Bundler](https://bundler.io/) in order to deploy.
 You will also need to get the google credentials and the `.keystore` file if you want to submit a build to the Play Store althrought this is not mandatory if you just want to run the project locally.
 
+Then you need to set some env variables:
+
+- `G4E_KEYSTORE` is the path to the `.keystore` file. Note that the root is `android/app/`.
+- `G4E_KEYSTORE_PASSWORD` is the password for the `.keystore` file.
+- `G4E_SIGNIN_KEY` is the name of the key used to deploy the app.
+
 There are currently two lanes in our fastfile: `beta` and `release`.
 
 ```
