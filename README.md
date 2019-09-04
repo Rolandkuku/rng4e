@@ -29,6 +29,8 @@ There are currently two lanes in our fastfile: `beta` and `release`.
 $ cd android && bundle exec fastlane <beta|release>
 ```
 
+⚠️ _Don’t forget to increment version number before deploy_
+
 ## Develop
 
 This is a super simple React Native app and most of it is written in JavaScript. No deep knowledge in Java is required.
