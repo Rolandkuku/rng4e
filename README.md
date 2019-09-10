@@ -42,6 +42,7 @@ The components are responsible for most of the logic althrought the navigation i
 Here is a non-exhaustive list of features yet to develop:
 
 - [ ] Articles and news pagination
-- [ ] Add google analytics
-- [ ] Add firebase
+- [x] Add google analytics
+- [x] Add firebase
 - [x] Share news and articles
+- [ ] Setup admob

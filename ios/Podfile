@@ -34,6 +34,8 @@ target 'rng4e' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
   target 'rng4eTests' do
     inherit! :search_paths
     # Pods for testing

@@ -63,3 +63,4 @@ buck-out/
 
 # Google 
 key.json
+android/app/google-services.json
