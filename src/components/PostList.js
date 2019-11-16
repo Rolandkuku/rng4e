@@ -17,7 +17,13 @@ import {
   Fade
 } from "rn-placeholder";
 
-import { fetchNews, fetchArticles } from "../services";
+import {
+  fetchNews,
+  fetchArticles,
+  getLocalPosts,
+  setLocalPosts,
+  resetLocalPosts
+} from "../services";
 import { parseDataForSectionList } from "../utils";
 import {
   MARGIN_BASE,
@@ -82,10 +88,16 @@ const NETWORK_ERROR_TEXT =
 async function fetch(setLoading, setData, setError, isNews) {
   setLoading(true);
   try {
+    // Get local data and render.
+    const localData = await getLocalPosts(isNews);
+    setData(parseDataForSectionList(localData));
+    // Then, fetch online data.
     const data = isNews ? await fetchNews() : await fetchArticles();
     setError(null);
     setData(parseDataForSectionList(data));
+    setLocalPosts(data, isNews);
   } catch (e) {
+    resetLocalPosts();
     setError(NETWORK_ERROR_TEXT);
   }
   setLoading(false);
