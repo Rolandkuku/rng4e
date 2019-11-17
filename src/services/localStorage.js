@@ -11,7 +11,7 @@ async function getLocalPosts(isNews: boolean): Posts {
     const parsedData = JSON.parse(data);
     return parsedData;
   } catch (e) {
-    resetLocalPosts();
+    resetLocalPosts(isNews);
     throw new Error(e);
   }
 }
@@ -26,15 +26,16 @@ async function setLocalPosts(posts: Posts, isNews: boolean) {
       `rng4e/${isNews ? "news" : "articles"}`,
       JSON.stringify(toSave.slice(0, 100)) // We only want to store up to 100 posts.
     );
+    return toSave;
   } catch (e) {
-    resetLocalPosts();
+    resetLocalPosts(isNews);
     throw new Error(e);
   }
 }
 
 async function resetLocalPosts(isNews: boolean) {
   try {
-    AsyncStorage.removeItem(`rng4e/${isNews ? "news" : "articles"}`);
+    return AsyncStorage.removeItem(`rng4e/${isNews ? "news" : "articles"}`);
   } catch (e) {
     throw new Error(e);
   }

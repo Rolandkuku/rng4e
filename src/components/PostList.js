@@ -92,12 +92,12 @@ async function fetch(setLoading, setData, setError, isNews) {
     const localData = await getLocalPosts(isNews);
     setData(parseDataForSectionList(localData));
     // Then, fetch online data.
-    const data = isNews ? await fetchNews() : await fetchArticles();
+    const onlineData = isNews ? await fetchNews() : await fetchArticles();
+    const newData = await setLocalPosts(onlineData, isNews);
     setError(null);
-    setData(parseDataForSectionList(data));
-    setLocalPosts(data, isNews);
+    setData(parseDataForSectionList(newData));
   } catch (e) {
-    resetLocalPosts();
+    resetLocalPosts(isNews);
     setError(NETWORK_ERROR_TEXT);
   }
   setLoading(false);
