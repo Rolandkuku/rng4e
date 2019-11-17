@@ -21,8 +21,7 @@ import {
   fetchNews,
   fetchArticles,
   getLocalPosts,
-  setLocalPosts,
-  resetLocalPosts
+  setLocalPosts
 } from "../services";
 import { parseDataForSectionList } from "../utils";
 import {
@@ -97,7 +96,6 @@ async function fetch(setLoading, setData, setError, isNews) {
     setError(null);
     setData(parseDataForSectionList(newData));
   } catch (e) {
-    resetLocalPosts(isNews);
     setError(NETWORK_ERROR_TEXT);
   }
   setLoading(false);
