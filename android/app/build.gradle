@@ -1,4 +1,9 @@
 apply plugin: "com.android.application"
+apply plugin: 'io.fabric'
+
+crashlytics {
+    enableNdk true
+}
 
 import com.android.build.OutputFile
 
@@ -131,7 +136,7 @@ android {
         applicationId "com.girondins4ever.g4etest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 14
         versionName "3.0.1"
     }
     splits {
@@ -206,10 +211,6 @@ dependencies {
     } else {
       implementation jscFlavor
     }
-
-    // Firebase dependencies
-    implementation "com.google.android.gms:play-services-base:16.1.0"
-    implementation "com.google.firebase:firebase-core:16.0.9"
 }
 
 // Run this once to be able to run the application with BUCK
