@@ -26,14 +26,14 @@ platform :android do
     gradle(
       task: "clean",
     )
-    gradle(task: "bundle", build_type: "Release")
+    gradle(task: "assemble", build_type: "Release")
     upload_to_play_store(track: "beta")
   end
 
   desc "Deploy a new version to the Google Play"
   lane :release do
     gradle(task: "clean")
-    gradle(task: "bundle", build_type: "Release")
+    gradle(task: "assemble", build_type: "Release")
     upload_to_play_store
   end
 end
