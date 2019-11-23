@@ -22,8 +22,8 @@ import {
   COLOR_BLACK,
   COLOR_IRON
 } from "../styles";
-import { TOS_URL } from "../utils";
-import type { Post } from "../types";
+import {TOS_URL} from "../utils";
+import type {Post} from "../types";
 
 const getTitle = routeName => {
   switch (routeName) {
@@ -43,9 +43,9 @@ const getTitle = routeName => {
 const tabBarColor = [COLOR_PRIMARY, COLOR_SECONDARY, COLOR_BLACK, COLOR_IRON];
 
 const getNavigationOptions = color => {
-  return ({ navigation }) => {
+  return ({navigation}) => {
     const post: Post = navigation.getParam("post");
-    const { routeName } = navigation.state;
+    const {routeName} = navigation.state;
     return {
       title: post ? null : getTitle(routeName),
       headerStyle: {
@@ -106,7 +106,7 @@ const AppNavigator = createBottomTabNavigator(
     News: {
       screen: NewsNavigator,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Icon
             name="mobile-alt"
             size={30}
@@ -118,7 +118,7 @@ const AppNavigator = createBottomTabNavigator(
     Articles: {
       screen: ArticlesNavigator,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Icon
             name="newspaper"
             size={30}
@@ -130,7 +130,7 @@ const AppNavigator = createBottomTabNavigator(
     Forum: {
       screen: ForumNavigator,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Icon
             name="rocketchat"
             size={30}
@@ -142,7 +142,7 @@ const AppNavigator = createBottomTabNavigator(
     Calendar: {
       screen: CalendarNavigator,
       navigationOptions: () => ({
-        tabBarIcon: ({ focused }) => (
+        tabBarIcon: ({focused}) => (
           <Icon
             name="calendar"
             size={30}
@@ -157,7 +157,7 @@ const AppNavigator = createBottomTabNavigator(
       showLabel: false
     },
     tabBarComponent: props => {
-      const { index } = props.navigation.state;
+      const {index} = props.navigation.state;
       return (
         <BottomTabBar
           {...props}
@@ -170,4 +170,4 @@ const AppNavigator = createBottomTabNavigator(
   }
 );
 
-export { AppNavigator };
+export {AppNavigator};
