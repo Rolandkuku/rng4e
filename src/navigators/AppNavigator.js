@@ -154,6 +154,7 @@ const AppNavigator = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
+      gesturesEnabled: true,
       showLabel: false
     },
     tabBarComponent: props => {

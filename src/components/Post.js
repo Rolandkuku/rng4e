@@ -1,40 +1,36 @@
 // @flow
-import React, { useState } from "react";
-import {
-  ScrollView,
-  View,
-  PixelRatio,
-  StyleSheet,
-  Linking
-} from "react-native";
-import { WebView } from "react-native-webview";
+import React, {useState} from "react";
+import {ScrollView, View, PixelRatio, StyleSheet, Linking} from "react-native";
+import {WebView} from "react-native-webview";
 import FastImage from "react-native-fast-image";
-import { decode } from "he";
+import {decode} from "he";
 
-import { htmlDocument, getDocumentHeighJS } from "../utils";
-import { H1, H3, Text } from "../components";
-import { MARGIN_BASE, MARGIN_XLARGE, MARGIN_LARGE } from "../styles";
-import type { Post as PostType } from "../types";
+import {htmlDocument, getDocumentHeighJS} from "../utils";
+import {H1, H3, Text} from "../components";
+import {MARGIN_BASE, MARGIN_XLARGE, MARGIN_LARGE} from "../styles";
+import type {Post as PostType} from "../types";
+
+const fallbackPic = require("../assets/img/fallback_pic.jpg");
 
 const styles = StyleSheet.create({
-  container: { padding: MARGIN_BASE },
+  container: {padding: MARGIN_BASE},
   titleContainer: {
     marginHorizontal: MARGIN_BASE,
     marginBottom: MARGIN_XLARGE,
     marginTop: MARGIN_LARGE
   },
-  title: { fontWeight: "bold" },
-  imageContainer: { flex: 1 },
-  image: { minHeight: 200 },
+  title: {fontWeight: "bold"},
+  imageContainer: {flex: 1},
+  image: {minHeight: 200},
   webViewContainer: {
     flex: 1,
     paddingHorizontal: MARGIN_BASE,
     marginVertical: MARGIN_LARGE
   },
-  webView: { fontSize: 40 }
+  webView: {fontSize: 40}
 });
 
-function Post({ post, isNews }: { post: PostType, isNews: boolean }) {
+function Post({post, isNews}: {post: PostType, isNews: boolean}) {
   this.defaultProps = {
     isNews: false
   };
@@ -56,16 +52,26 @@ function Post({ post, isNews }: { post: PostType, isNews: boolean }) {
         </Text>
       </View>
       <View style={styles.imageContainer}>
-        <FastImage
-          source={{ uri: post.thumbnail_images.full.url }}
-          resizeMode="contain"
-          style={styles.image}
-        />
+        {post.thumbnail_images &&
+        post.thumbnail_images.full &&
+        post.thumbnail_images.full.url ? (
+          <FastImage
+            style={styles.image}
+            resizeMode="cover"
+            source={{uri: post.thumbnail_images.full.url}}
+          />
+        ) : (
+          <FastImage
+            style={styles.image}
+            resizeMode="cover"
+            source={fallbackPic}
+          />
+        )}
       </View>
       <View style={styles.webViewContainer}>
         <WebView
-          style={[styles.webView, { height: webViewHeight }]}
-          source={{ html: htmlDocument(post.content) }}
+          style={[styles.webView, {height: webViewHeight}]}
+          source={{html: htmlDocument(post.content)}}
           scrollEnabled={false}
           injectedJavaScript={getDocumentHeighJS}
           onShouldStartLoadWithRequest={request => {
@@ -87,4 +93,4 @@ function Post({ post, isNews }: { post: PostType, isNews: boolean }) {
   );
 }
 
-export { Post };
+export {Post};

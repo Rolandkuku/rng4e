@@ -1,15 +1,15 @@
 // @flow
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import FastImage from "react-native-fast-image";
 import {
   View,
   StyleSheet,
-  SectionList,
   ScrollView,
   RefreshControl,
   TouchableNativeFeedback
 } from "react-native";
-import { decode } from "he";
+import {SectionList} from "react-navigation";
+import {decode} from "he";
 import {
   Placeholder,
   PlaceholderMedia,
@@ -23,7 +23,7 @@ import {
   getLocalPosts,
   setLocalPosts
 } from "../services";
-import { parseDataForSectionList } from "../utils";
+import {parseDataForSectionList} from "../utils";
 import {
   MARGIN_BASE,
   MARGIN_SMALL,
@@ -32,8 +32,10 @@ import {
   COLOR_WHITE,
   COLOR_BLACK
 } from "../styles";
-import { Badge, Text, H3 } from ".";
-import type { Post } from "../types";
+import {Badge, Text, H3} from ".";
+import type {Post} from "../types";
+
+const fallbackPic = require("../assets/img/fallback_pic.jpg");
 
 const styles = StyleSheet.create({
   container: {
@@ -111,8 +113,7 @@ const PostLinePlaceholder = () => {
         key={i}
         style={styles.placeholder}
         Animation={Fade}
-        Left={() => <PlaceholderMedia style={styles.placeholderMedia} />}
-      >
+        Left={() => <PlaceholderMedia style={styles.placeholderMedia} />}>
         <PlaceholderLine width={30} />
         <PlaceholderLine />
         <PlaceholderLine />
@@ -123,18 +124,27 @@ const PostLinePlaceholder = () => {
   return placeholders;
 };
 
-function PostLine({ post, index, onPostPress }) {
+function PostLine({post, index, onPostPress}) {
   return (
     <TouchableNativeFeedback key={index} onPress={() => onPostPress(post)}>
       <View
-        style={[styles.postLine, index % 2 !== 0 ? styles.postLineOdd : null]}
-      >
+        style={[styles.postLine, index % 2 !== 0 ? styles.postLineOdd : null]}>
         <View>
-          <FastImage
-            style={styles.thumbnail}
-            resizeMode="cover"
-            source={{ uri: post.thumbnail_images.full.url }}
-          />
+          {post.thumbnail_images &&
+          post.thumbnail_images.full &&
+          post.thumbnail_images.full.url ? (
+            <FastImage
+              style={styles.thumbnail}
+              resizeMode="cover"
+              source={{uri: post.thumbnail_images.full.url}}
+            />
+          ) : (
+            <FastImage
+              style={styles.thumbnail}
+              resizeMode="cover"
+              source={fallbackPic}
+            />
+          )}
           {post.categories.length ? (
             <Badge style={styles.badge}>{post.categories[0].title}</Badge>
           ) : null}
@@ -155,7 +165,7 @@ function PostLine({ post, index, onPostPress }) {
   );
 }
 
-const ErrorMessage = ({ children, onPress }) => (
+const ErrorMessage = ({children, onPress}) => (
   <TouchableNativeFeedback onPress={onPress}>
     <View style={styles.errorMessageContainer}>
       <Text styles={styles.errorMessageText}>{children}</Text>
@@ -205,8 +215,7 @@ function PostList({
           style={styles.container}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+          }>
           <PostLinePlaceholder />
         </ScrollView>
       ) : (
@@ -216,8 +225,8 @@ function PostList({
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           sections={data}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={{ padding: MARGIN_BASE }}>
+          renderSectionHeader={({section: {title}}) => (
+            <View style={{padding: MARGIN_BASE}}>
               <Text style={styles.sectionTitle}>{title}</Text>
             </View>
           )}
@@ -238,4 +247,4 @@ function PostList({
   );
 }
 
-export { PostList };
+export {PostList};
