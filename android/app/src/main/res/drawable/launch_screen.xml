@@ -5,11 +5,6 @@
         <color android:color="@color/white"/>
     </item>
     <item>
-        <bitmap
-            android:src="@drawable/splash_img"
-            android:tileMode="disabled"
-            android:gravity="center_horizontal|center_vertical"
-            android:filter="true"
-            />
+        <bitmap android:src="@drawable/launch" android:gravity="center|bottom|fill_vertical"  />
     </item>
 </layer-list>

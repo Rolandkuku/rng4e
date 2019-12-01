@@ -1,10 +1,5 @@
 apply plugin: "com.android.application"
 apply plugin: 'io.fabric'
-
-crashlytics {
-    enableNdk true
-}
-
 import com.android.build.OutputFile
 
 /**
@@ -200,7 +195,6 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

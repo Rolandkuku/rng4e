@@ -1,16 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 
-import {
-  MARGIN_XSMALL,
-  RADIUS_BASE,
-  COLOR_WHITE,
-  TEXT_XSMALL
-} from "../styles";
+import {MARGIN_XSMALL, RADIUS_BASE, COLOR_WHITE, TEXT_XSMALL} from "../styles";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "red",
+    backgroundColor: "grey",
     padding: MARGIN_XSMALL,
     borderRadius: RADIUS_BASE
   },
@@ -22,7 +17,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function Badge({ children, style }) {
+function Badge({children, style}) {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.text}>{children}</Text>
@@ -30,4 +25,4 @@ function Badge({ children, style }) {
   );
 }
 
-export { Badge };
+export {Badge};
