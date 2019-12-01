@@ -1,11 +1,15 @@
 // @flow
-import React, {useState} from "react";
-import {ScrollView, View, PixelRatio, StyleSheet, Linking} from "react-native";
+import React, {useState, useRef} from "react";
+import {ScrollView, View, StyleSheet, Linking} from "react-native";
 import {WebView} from "react-native-webview";
 import FastImage from "react-native-fast-image";
 import {decode} from "he";
 
-import {htmlDocument, getDocumentHeighJS} from "../utils";
+import {
+  htmlDocument,
+  getDocumentHeighJS,
+  getPixelRatioWithMaximum
+} from "../utils";
 import {H1, H3, Text} from "../components";
 import {MARGIN_BASE, MARGIN_XLARGE, MARGIN_LARGE} from "../styles";
 import type {Post as PostType} from "../types";
@@ -34,7 +38,9 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
   this.defaultProps = {
     isNews: false
   };
-  const [webViewHeight, setWebViewHeight] = useState(1000);
+  const [webViewHeight, setWebViewHeight] = useState(2560);
+
+  const ref = useRef(null);
 
   if (!post.id) {
     return (
@@ -70,6 +76,7 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
       </View>
       <View style={styles.webViewContainer}>
         <WebView
+          ref={ref}
           style={[styles.webView, {height: webViewHeight}]}
           source={{html: htmlDocument(post.content)}}
           scrollEnabled={false}
@@ -83,7 +90,9 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
           }}
           onMessage={e => {
             setWebViewHeight(
-              Number(e.nativeEvent.data / PixelRatio.get() + MARGIN_LARGE)
+              Number(
+                e.nativeEvent.data / getPixelRatioWithMaximum() + MARGIN_LARGE
+              )
             );
           }}
           allowsFullscreenVideo
