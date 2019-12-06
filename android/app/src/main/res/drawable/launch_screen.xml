@@ -4,7 +4,11 @@
     <item>
         <color android:color="@color/white"/>
     </item>
-    <item>
-        <bitmap android:src="@drawable/launch" android:gravity="center|bottom|fill_vertical"  />
+    <item
+        android:width="200dp"
+        android:height="200dp"
+        android:drawable="@drawable/logo_slash"
+        android:gravity="center"
+        >
     </item>
 </layer-list>
