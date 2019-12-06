@@ -131,8 +131,8 @@ android {
         applicationId "com.girondins4ever.g4etest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 23
-        versionName "3.1.3"
+        versionCode 24
+        versionName "3.1.4"
     }
     splits {
         abi {
