@@ -2,10 +2,9 @@ import {PixelRatio} from "react-native";
 
 export const htmlDocument = content => `
   <html>
-    <head>
-    <div style="font-size:${45};" id="content">
+    <body>
       ${content}
-    </div>
+    </body>
   </html>
 `;
 
@@ -18,7 +17,7 @@ export const getDocumentHeighJS = `
 
 export function getPixelRatioWithMaximum() {
   const ratio = PixelRatio.get();
-  return ratio <= 3 ? ratio : 3;
+  return ratio <= 3.5 ? ratio : 3.5;
 }
 
 export * from "./parsers";

@@ -1,6 +1,7 @@
 // @flow
 import React, {useState, useRef} from "react";
-import {ScrollView, View, StyleSheet, Linking} from "react-native";
+import {ScrollView, View, StyleSheet, Dimensions, Linking} from "react-native";
+import AutoHeightWebView from "react-native-autoheight-webview";
 import {WebView} from "react-native-webview";
 import FastImage from "react-native-fast-image";
 import {decode} from "he";
@@ -31,16 +32,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: MARGIN_BASE,
     marginVertical: MARGIN_LARGE
   },
-  webView: {fontSize: 40}
+  webView: {
+    padding: MARGIN_BASE
+  }
 });
 
 function Post({post, isNews}: {post: PostType, isNews: boolean}) {
   this.defaultProps = {
     isNews: false
   };
-  const [webViewHeight, setWebViewHeight] = useState(2560);
-
-  const ref = useRef(null);
+  const [webviewWidth, setWebViewWidth] = useState(
+    Dimensions.get("window").width - MARGIN_BASE * 2
+  );
 
   if (!post.id) {
     return (
@@ -74,26 +77,25 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
           />
         )}
       </View>
-      <View style={styles.webViewContainer}>
-        <WebView
-          ref={ref}
-          style={[styles.webView, {height: webViewHeight}]}
+      <View
+        style={styles.webViewContainer}
+        onLayout={event => {
+          setWebViewWidth(event.nativeEvent.layout.width);
+        }}>
+        <AutoHeightWebView
           source={{html: htmlDocument(post.content)}}
-          scrollEnabled={false}
-          injectedJavaScript={getDocumentHeighJS}
+          style={[styles.webView, {width: webviewWidth - MARGIN_BASE * 2}]}
+          customStyle={`
+          p {
+            font-size: 16px;
+          }
+          `}
           onShouldStartLoadWithRequest={request => {
             const shouldOpenInBrowser = request.url !== "about:blank";
             if (shouldOpenInBrowser) {
               Linking.openURL(request.url);
             }
             return !shouldOpenInBrowser;
-          }}
-          onMessage={e => {
-            setWebViewHeight(
-              Number(
-                e.nativeEvent.data / getPixelRatioWithMaximum() + MARGIN_LARGE
-              )
-            );
           }}
           allowsFullscreenVideo
         />
