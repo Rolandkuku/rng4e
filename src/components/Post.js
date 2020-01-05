@@ -45,8 +45,6 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
     Dimensions.get("window").width - MARGIN_BASE * 2
   );
 
-  console.log(post.content);
-
   if (!post.id) {
     return (
       <View>
