@@ -1,8 +1,10 @@
 import React from "react";
-import { WebView } from "react-native-webview";
+import {WebView} from "react-native-webview";
 
 function CalendarScreen() {
-  return <WebView source={{ uri: "https://m.lfp.fr/ligue1/classement" }} />;
+  return (
+    <WebView source={{uri: "https://m.lfp.fr/ligue1/calendrier_resultat"}} />
+  );
 }
 
-export { CalendarScreen };
+export {CalendarScreen};

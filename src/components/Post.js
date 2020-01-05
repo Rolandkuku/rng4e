@@ -45,6 +45,8 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
     Dimensions.get("window").width - MARGIN_BASE * 2
   );
 
+  console.log(post.content);
+
   if (!post.id) {
     return (
       <View>
@@ -86,8 +88,14 @@ function Post({post, isNews}: {post: PostType, isNews: boolean}) {
           source={{html: htmlDocument(post.content)}}
           style={[styles.webView, {width: webviewWidth - MARGIN_BASE * 2}]}
           customStyle={`
+          * {
+            font-family: arial;
+          }
           p {
             font-size: 16px;
+          }
+          blockquote {
+            margin: 8px;
           }
           `}
           onShouldStartLoadWithRequest={request => {
