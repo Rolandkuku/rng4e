@@ -11,7 +11,7 @@
     "@react-native-community/async-storage": "^1.6.3",
     "@react-native-firebase/app": "^8.4.6",
     "@react-native-firebase/crashlytics": "^8.4.11",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "he": "^1.2.0",
     "immutable": "^4.0.0-rc.12",
     "jetifier": "^1.6.4",
